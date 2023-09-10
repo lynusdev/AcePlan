@@ -1,0 +1,86 @@
+{% extends "base.html" %} {% block title %}Sign up{% endblock %} {% block
+content %}
+<h1 class="title is-1 has-text-primary has-text-centered p-5">MyPlan</h1>
+<form class="box" method="POST">
+  <div class="m-4">
+    <h1 class="title has-text-centered mb-6">Sign Up</h1>
+    <div class="field">
+      <label class="label">Username</label>
+      <p class="control has-icons-left">
+        <input
+          type="text"
+          class="input"
+          id="username"
+          name="username"
+          placeholder="Username"
+        />
+        <span class="icon is-left">
+          <i class="fa-solid fa-user"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <label class="label">Password</label>
+      <p class="control has-icons-left">
+        <input
+          type="password"
+          class="input"
+          id="password"
+          name="password"
+          placeholder="Password"
+        />
+        <span class="icon is-left">
+          <i class="fa-solid fa-lock"></i>
+        </span>
+      </p>
+    </div>
+    <div class="field">
+      <div class="control has-icons-left">
+        <label class="label">Klasse</label>
+        <div class="select">
+          <select id="klasse" name="klasse" class="form-control">
+            <option value="5a">5a</option>
+            <option value="5b">5b</option>
+            <option value="5c">5c</option>
+            <option value="5d">5d</option>
+            <option value="6a">6a</option>
+            <option value="6b">6b</option>
+            <option value="6c">6c</option>
+            <option value="6d">6d</option>
+            <option value="7a">7a</option>
+            <option value="7b">7b</option>
+            <option value="7c">7c</option>
+            <option value="7d">7d</option>
+            <option value="8a">8a</option>
+            <option value="8b">8b</option>
+            <option value="8c">8c</option>
+            <option value="8d">8d</option>
+            <option value="9a">9a</option>
+            <option value="9b">9b</option>
+            <option value="9c">9c</option>
+            <option value="9d">9d</option>
+            <option value="10a">10a</option>
+            <option value="10b">10b</option>
+            <option value="10c">10c</option>
+            <option value="10d">10d</option>
+            <option value="J1">J1</option>
+            <option value="J2">J2</option>
+          </select>
+          <span class="icon is-left">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="control has-text-centered mt-6">
+      <button class="button is-primary is-medium" type="submit">
+        Create Account
+      </button>
+    </div>
+  </div>
+</form>
+<div class="block has-text-centered">
+  Already have an account?
+  <a href="signin" class="has-text-dark has-text-weight-bold">Sign In</a>
+</div>
+{% endblock %}

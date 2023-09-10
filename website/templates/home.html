@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block
+navigation %}
+<div class="pb-4">
+  <div class="columns is-mobile">
+    <div class="column">
+      <h1 class="title is-2">Hi, {{user.username}}!</h1>
+    </div>
+    <div class="column is-narrow">
+      <div class="icon is-large">
+        <i
+          class="fa-solid fa-bars fa-2xl"
+          onclick="window.location.href='settings';"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}{% block content %}
+<div class="pt-4">
+  <h2 class="subtitle is-5">View your personal substitution plan</h2>
+  <form class="mb-1" method="POST">
+    <div class="field has-addons">
+      <p class="control">
+        <a class="button is-static">{{ week_day }}</a>
+      </p>
+      <p class="control has-icons-left is-expanded">
+        <input
+          type="date"
+          class="input"
+          id="date"
+          name="date"
+          value="{{ date }}"
+        />
+        <span class="icon is-left">
+          <i class="fa-solid fa-calendar-days"></i>
+        </span>
+      </p>
+      <p class="control">
+        <button class="button is-info" type="submit">Confirm</button>
+      </p>
+    </div>
+  </form>
+  <div class="is-size-7 has-text-grey-light has-text-centered mb-5">
+    Stand: {{ last_update }}
+  </div>
+  {% if messages %}
+  <article class="message is-link">
+    <div class="message-header">
+      <p>General Info</p>
+      <button class="delete" aria-label="delete"></button>
+    </div>
+    <div class="message-body">
+      {% for message in messages %}
+      <div class="block">{{ message }}</div>
+      {% endfor %}
+    </div>
+  </article>
+  {% endif %}
+</div>
+{% endblock %}

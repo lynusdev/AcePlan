@@ -1,0 +1,94 @@
+{% extends "base.html" %} {% block title %}Settings{% endblock %} {% block
+navigation %}
+<div class="pb-4">
+  <div class="columns is-mobile">
+    <div class="column is-narrow">
+      <div class="icon is-large">
+        <i
+          class="fa-solid fa-arrow-left fa-2x"
+          onclick="window.location.href='home';"
+        ></i>
+      </div>
+    </div>
+    <div class="column">
+      <h1 class="title is-2">Settings</h1>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block content %}
+<div class="pt-4">
+  <h2 class="subtitle is-5">Change your account settings here</h2>
+  <form method="POST" class="box">
+    <div class="m-4">
+      <h1 class="title is-4 has-text-centered">Account</h1>
+      <div class="field">
+        <label class="label">Username</label>
+        <p class="control has-icons-left">
+          <input type="text" class="input" value="{{user.username}}" disabled />
+          <span class="icon is-left">
+            <i class="fa-solid fa-user"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <label class="label">Password</label>
+        <p class="control has-icons-left">
+          <input
+            type="password"
+            class="input"
+            value="{{user.passwordlength}}"
+            disabled
+          />
+          <span class="icon is-left">
+            <i class="fa-solid fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <div class="control has-icons-left">
+          <label class="label">Klasse</label>
+          <div class="select">
+            <select id="klasse" name="klasse" class="form-control">
+              {% for klasse in alle_klassen %} 
+              <option value="{{ klasse }}" {% if klasse == user.klasse %}selected{% endif %}>{{ klasse }}</option>
+              {% endfor %}
+            </select>
+            <span class="icon is-left">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      {% if user.klasse == "J1" or user.klasse == "J2"%}
+      <div class="field">
+        <label class="label">Kurse</label>
+        {% for kurs in alle_kurse %}
+        <label class="checkbox is-size-5">
+          <input
+            type="checkbox"
+            id="{{kurs}}"
+            name="kurse"
+            value="{{kurs}}"
+            {% if kurs in ausgewählte_kurse %}checked{% endif %}
+          />
+          {{kurs}}</label
+        ><br />
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="control has-text-centered mt-4">
+        <button class="button is-primary" type="submit">Confirm</button>
+      </div>
+    </div>
+  </form>
+  <div class="has-text-centered">
+    <button
+      class="button is-danger has-text-weight-bold is-medium is-fullwidth"
+      onclick="window.location.href='logout';"
+    >
+      Logout
+    </button>
+  </div>
+  <h2 class="subtitle has-text-centered pt-5 is-6">MyPlan v.1.2</h2>
+</div>
+{% endblock %}
