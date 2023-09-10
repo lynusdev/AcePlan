@@ -1,2 +1,2 @@
-MyPlan is a web based substitution plan app.
+MyPlan is a web based substitution plan app for my school.
 Work in progress...
