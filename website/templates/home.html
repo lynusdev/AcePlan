@@ -41,7 +41,7 @@ navigation %}
     </div>
   </form>
   <div class="is-size-7 has-text-grey-light has-text-centered mb-5">
-    Stand: {{ last_update }}
+    Last Update: {{ last_update }}
   </div>
   {% if messages %}
   <article class="message is-link">
@@ -55,6 +55,49 @@ navigation %}
       {% endfor %}
     </div>
   </article>
-  {% endif %}
+  {% endif %} {% if changes %} {% for change in changes %} {% if change[6] ==
+  "CANCELED" %}
+  <div class="box has-background-danger">
+    {% elif change[6] == "CHANGE" %}
+    <div class="box has-background-warning">
+      {% endif %}
+      <div class="columns is-mobile is-vcentered">
+        <div
+          class="column is-one-quarter has-text-centered p-1"
+          style="height: 100%"
+        >
+          <div class="notification has-background-white px-2 title is-3">
+            {{ change[0] }}
+          </div>
+        </div>
+        <div class="column">
+          <div class="columns is-multiline is-mobile">
+            <div class="column is-one-third has-text-centered p-1">
+              <div class="notification has-background-white px-2">
+                {{ change[1] }}
+              </div>
+            </div>
+            <div class="column is-one-third has-text-centered p-1">
+              <div class="notification has-background-white px-2">
+                {{ change[2] }}
+              </div>
+            </div>
+            <div class="column is-one-third has-text-centered p-1">
+              <div class="notification has-background-white px-2">
+                {{ change[3] }}
+              </div>
+            </div>
+            <div class="column is-full has-text-centered p-1">
+              <div class="notification has-background-white px-2">
+                {{ change[4] }}
+                <br />
+                {{ change[5] }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% endif %} {% endblock %}
+  </div>
 </div>
-{% endblock %}

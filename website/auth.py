@@ -39,6 +39,7 @@ def signup():
         password = request.form.get('password')
         password_length = "X" * len(password)
         klasse = request.form.get('klasse')
+        print(klasse)
 
         user = User.query.filter_by(username=username).first()
         if user:
