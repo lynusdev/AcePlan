@@ -73,25 +73,30 @@ navigation %}
         <div class="column">
           <div class="columns is-multiline is-mobile">
             <div class="column is-one-third has-text-centered p-1">
-              <div class="notification has-background-white px-2">
+              <div
+                class="notification has-background-white px-2 has-text-weight-bold"
+              >
                 {{ change[1] }}
               </div>
             </div>
             <div class="column is-one-third has-text-centered p-1">
-              <div class="notification has-background-white px-2">
+              <div
+                class="notification has-background-white px-2 has-text-weight-bold"
+              >
                 {{ change[2] }}
               </div>
             </div>
             <div class="column is-one-third has-text-centered p-1">
-              <div class="notification has-background-white px-2">
+              <div
+                class="notification has-background-white px-2 has-text-weight-bold"
+              >
                 {{ change[3] }}
               </div>
             </div>
             <div class="column is-full has-text-centered p-1">
               <div class="notification has-background-white px-2">
-                {{ change[4] }}
-                <br />
-                {{ change[5] }}
+                {{ change[4] }}{% if not change[4] == "" and not change[5] ==
+                ""%} | {% endif %}{{ change[5] }}
               </div>
             </div>
           </div>

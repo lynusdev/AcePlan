@@ -7,4 +7,3 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String)
     passwordlength = db.Column(db.Integer)
     klasse = db.Column(db.String)
-    kurse = db.Column(db.String)

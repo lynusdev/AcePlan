@@ -39,7 +39,6 @@ def signup():
         password = request.form.get('password')
         password_length = "X" * len(password)
         klasse = request.form.get('klasse')
-        print(klasse)
 
         user = User.query.filter_by(username=username).first()
         if user:
@@ -55,7 +54,7 @@ def signup():
         elif len(password) > 50:
             flash('Password cant be longer than 50 characters.', category='error')
         else:
-            new_user = User(username=username, password=generate_password_hash(password, method='sha256'), passwordlength=password_length, klasse=klasse)
+            new_user = User(username=username, password=generate_password_hash(password, method='scrypt'), passwordlength=password_length, klasse=klasse)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)

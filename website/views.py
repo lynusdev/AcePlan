@@ -9,7 +9,6 @@ import html
 
 views = Blueprint('views', __name__)
 
-alle_kurse = ["s1", "s2", "s3", "s4", "E1", "E2"]
 alle_klassen = ["5A", "5B", "5C", "5D", "6A", "6B", "6C", "6D", "7A", "7B", "7C", "7D", "8A", "8B", "8C", "8D", "9A", "9B", "9C", "9D", "10A", "10B", "10C", "10D", "J1", "J2"]
 
 @views.route("/")
@@ -28,9 +27,6 @@ def home():
     else:
         date = datetime.today().strftime('%Y-%m-%d')
 
-    # Get user data
-    user = User.query.filter_by(id=current_user.id).first()
-
     url = "https://hektor.webuntis.com/WebUntis/monitor/substitution/data?school=KurfuerstFGym"
     payload = {"formatName":"Vertr_Lehrer_heute","schoolName":"KurfuerstFGym","date":date.replace("-", ""),"dateOffset":0,"strikethrough":True,"mergeBlocks":True,"showOnlyFutureSub":False,"showBreakSupervisions":False,"showTeacher":True,"showClass":True,"showHour":True,"showInfo":True,"showRoom":True,"showSubject":True,"groupBy":2,"hideAbsent":True,"departmentIds":[3,2,1,4],"departmentElementType":1,"hideCancelWithSubstitution":False,"hideCancelCausedByEvent":False,"showTime":False,"showSubstText":True,"showAbsentElements":[4,1,2],"showAffectedElements":[],"showUnitTime":False,"showMessages":True,"showStudentgroup":False,"enableSubstitutionFrom":False,"showSubstitutionFrom":0,"showTeacherOnEvent":False,"showAbsentTeacher":True,"strikethroughAbsentTeacher":True,"activityTypeIds":[2,3,4],"showEvent":False,"showCancel":True,"showOnlyCancel":False,"showSubstTypeColor":False,"showExamSupervision":False,"showUnheraldedExams":False}
     response = requests.post(url, json=payload).text
@@ -38,6 +34,11 @@ def home():
 
     # Last Update
     last_update = data_dict["payload"]["lastUpdate"]
+
+    # Date for data
+    data_date = data_dict["payload"]["date"]
+    data_date = str(data_date)[:4] + "-" + str(data_date)[4:]
+    data_date = str(data_date)[:7] + "-" + str(data_date)[7:]
 
     # Week Day
     week_day = data_dict["payload"]["weekDay"]
@@ -51,10 +52,10 @@ def home():
 
     # Changes
     rows = data_dict["payload"]["rows"]
-    changes = []
+    unsorted_changes = []
     for row in rows:
         classes = row["data"][1]
-        if user.klasse in classes:
+        if current_user.klasse in classes:
             cleaned_row = []
             # Hour
             cleaned_row.append(html.unescape(row["data"][0].replace(' ', "")))
@@ -63,7 +64,7 @@ def home():
             # Room
             cleaned_row.append(html.unescape(row["data"][3].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', "")))
             # Teacher
-            cleaned_row.append(html.unescape(row["data"][4]))
+            cleaned_row.append(html.unescape(row["data"][4].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', "")))
             # Info
             cleaned_row.append(html.unescape(row["data"][5]))
             # Text
@@ -73,29 +74,36 @@ def home():
                 cleaned_row.append("CANCELED")
             else:
                 cleaned_row.append("CHANGE")
-            changes.append(cleaned_row)
+            if cleaned_row not in unsorted_changes:
+                unsorted_changes.append(cleaned_row)
 
-    return render_template("home.html", user=current_user, messages=messages_cleaned, date=date, week_day=week_day, last_update=last_update, changes=changes)
+    changes = []
+    len_unsortet_changes = len(unsorted_changes)
+    first_hour = 999
+    first_index = 0
+    while not len(changes) == len_unsortet_changes:
+        for x, change in enumerate(unsorted_changes):
+            hour = int(change[0][:1])
+            if hour <= first_hour:
+                first_hour = hour
+                first_index = x
+        changes.append(unsorted_changes[first_index])
+        unsorted_changes.pop(first_index)
+        first_hour = 999
+
+    return render_template("home.html", user=current_user, messages=messages_cleaned, date=data_date, week_day=week_day, last_update=last_update, changes=changes)
 
 @views.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
-    global alle_kurse
     global alle_klassen
     
     if request.method == 'POST':
         flash('Your settings have been saved!', category='success')
-        ausgewählte_kurse = ",".join(request.form.getlist('kurse'))
         klasse = request.form.get('klasse')
         user = User.query.filter_by(id=current_user.id).first()
-        user.kurse = ausgewählte_kurse
         user.klasse = klasse
         db.session.commit()
-
-    if not current_user.kurse == None:
-        ausgewählte_kurse = current_user.kurse.split(",")
-    else:
-        ausgewählte_kurse = []
         
-    return render_template("settings.html", user=current_user, alle_kurse=alle_kurse, alle_klassen=alle_klassen, ausgewählte_kurse=ausgewählte_kurse)
+    return render_template("settings.html", user=current_user, alle_klassen=alle_klassen)
     

@@ -59,23 +59,6 @@ navigation %}
           </div>
         </div>
       </div>
-      {% if user.klasse == "J1" or user.klasse == "J2"%}
-      <div class="field">
-        <label class="label">Kurse</label>
-        {% for kurs in alle_kurse %}
-        <label class="checkbox is-size-5">
-          <input
-            type="checkbox"
-            id="{{kurs}}"
-            name="kurse"
-            value="{{kurs}}"
-            {% if kurs in ausgewählte_kurse %}checked{% endif %}
-          />
-          {{kurs}}</label
-        ><br />
-        {% endfor %}
-      </div>
-      {% endif %}
       <div class="control has-text-centered mt-4">
         <button class="button is-primary" type="submit">Confirm</button>
       </div>
@@ -89,6 +72,6 @@ navigation %}
       Logout
     </button>
   </div>
-  <h2 class="subtitle has-text-centered pt-5 is-6">MyPlan v.1.2</h2>
+  <h2 class="subtitle has-text-centered pt-5 is-6">MyPlan v.3.7</h2>
 </div>
 {% endblock %}
