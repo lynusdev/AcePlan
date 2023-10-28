@@ -15,9 +15,13 @@ alle_klassen = ["5A", "5B", "5C", "5D", "6A", "6B", "6C", "6D", "7A", "7B", "7C"
 def lander():
     return render_template("lander.html", user=current_user)
 
-@views.route("/download")
-def download():
-    return send_file(".\static\MyPlan.mobileconfig", as_attachment=True)
+@views.route("/ios")
+def ios():
+    return send_file(".\static\AcePlann.mobileconfig", as_attachment=True)
+
+@views.route("/android")
+def android():
+    return send_file(".\static\AcePlan.mobileconfig", as_attachment=True)
 
 @views.route("/home", methods=["GET", "POST"])
 @login_required

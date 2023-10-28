@@ -1,9 +1,29 @@
 {% extends "base.html" %} {% block title %}AcePlan{% endblock %} {% block
 content %}
-<h1>Lander</h1>
-<br />
-<i
-  class="fa-solid fa-arrow-left fa-2xl"
-  onclick="window.location.href='download';"
-></i>
+<p class="title is-1 has-text-info has-text-centered pb-4 pt-6 mt-6">AcePlan</p>
+<p class="subtitle is-5 has-text-centered mx-5 mb-0">
+  Making Substitution Plans <b>Simple</b>.
+</p>
+<div class="box has-text-centered my-6 mx-6 p-4">
+  <p class="title is-4 has-text-centered">Download</p>
+  <button class="button is-dark mr-1" onclick="window.location.href='ios';">
+    <span class="icon">
+      <i class="fa-brands fa-apple"></i>
+    </span>
+    <span>iOS</span>
+  </button>
+  <button class="button is-dark ml-1" onclick="window.location.href='android';">
+    <span class="icon">
+      <i class="fa-brands fa-android"></i>
+    </span>
+    <span>Android</span>
+  </button>
+</div>
+
+<div class="box mx-4 has-text-centered has-text-weight-medium">
+  AcePlan redefines how students manage school substitution plans, providing a
+  user-friendly mobile application for personalized scheduling. <br />
+  With AcePlan, students can effortlessly access and control their substitution
+  schedules, simplifying their school day.
+</div>
 {% endblock %}
