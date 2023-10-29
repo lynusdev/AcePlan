@@ -17,7 +17,7 @@ def lander():
 
 @views.route("/ios")
 def ios():
-    return send_file(".\static\AcePlann.mobileconfig", as_attachment=True)
+    return send_file(".\static\AcePlan.mobileconfig", as_attachment=True)
 
 @views.route("/android")
 def android():
