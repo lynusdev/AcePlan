@@ -17,11 +17,11 @@ def lander():
 
 @views.route("/ios")
 def ios():
-    return send_file(".\static\AcePlan.mobileconfig", as_attachment=True)
+    return send_file("./static/AcePlan.mobileconfig", as_attachment=True)
 
 @views.route("/android")
 def android():
-    return send_file(".\static\AcePlan.mobileconfig", as_attachment=True)
+    return send_file("./static/AcePlan.apk", as_attachment=True)
 
 @views.route("/home", methods=["GET", "POST"])
 @login_required
@@ -61,18 +61,34 @@ def home():
         classes = row["data"][1]
         if current_user.klasse in classes:
             cleaned_row = []
+
             # Hour
-            cleaned_row.append(html.unescape(row["data"][0].replace(' ', "")))
+            row_hour = html.unescape(row["data"][0].replace(' ', ""))
+            cleaned_row.append(row_hour)
+
             # Subject
-            cleaned_row.append(html.unescape(row["data"][2]))
+            row_subject = html.unescape(row["data"][2])
+            cleaned_row.append(row_subject)
+
             # Room
-            cleaned_row.append(html.unescape(row["data"][3].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', "")))
+            row_room = html.unescape(row["data"][3].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', ""))
+            cleaned_row.append(row_room)
+
             # Teacher
-            cleaned_row.append(html.unescape(row["data"][4].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', "")))
+            row_teacher = html.unescape(row["data"][4].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', ""))
+            cleaned_row.append(row_teacher)
+
             # Info
-            cleaned_row.append(html.unescape(row["data"][5]))
+            row_info = html.unescape(row["data"][5])
+            cleaned_row.append(row_info)
+
             # Text
-            cleaned_row.append(html.unescape(row["data"][6]))
+            row_text = html.unescape(row["data"][6])
+            if row_info == "" and row_text == "":
+                cleaned_row.append("---")
+            else:
+                cleaned_row.append(row_text)
+
             # Entfall
             if "1" in row["cellClasses"]:
                 cleaned_row.append("CANCELED")
