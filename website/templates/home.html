@@ -58,12 +58,9 @@ navigation %}
   {% endif %}
   {% if changes %}
   {% for change in changes %}
-  {% if change[6] == "CANCELED" %}
-  <div class="box has-background-danger p-4" style="border-radius: 10px">
-  {% elif change[6] == "CHANGE" %}
-  <div class="box has-background-warning p-4" style="border-radius: 10px">
-  {% endif %}
-        <div class="columns is-mobile is-variable is-2">
+  
+  <div class="box p-4 {% if change[6] == 'CANCELED' %}has-background-danger{% elif change[6] == 'CHANGE' %}has-background-warning{% endif %}" style="border-radius: 10px">
+    <div class="columns is-mobile is-variable is-2">
           <div class="column is-3">
             <div
               class="notification has-background-white is-flex is-justify-content-center is-align-items-center p-0 has-text-weight-bold"
@@ -90,13 +87,13 @@ navigation %}
                   {{ change[1] }}
                 </div>
                 <div
-                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center"
+                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center {% if change[7] == 'CHANGE' %}is-underlined{% endif %}"
                   style="font-size: 5vw;"
                 >
                   {{ change[2] }}
                 </div>
                 <div
-                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center"
+                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center {% if change[8] == 'CHANGE' %}is-underlined{% endif %}"
                   style="font-size: 5vw;"
                 >
                   {{ change[3] }}

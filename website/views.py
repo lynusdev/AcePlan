@@ -11,12 +11,12 @@ views = Blueprint('views', __name__)
 
 alle_klassen = ["5A", "5B", "5C", "5D", "6A", "6B", "6C", "6D", "7A", "7B", "7C", "7D", "8A", "8B", "8C", "8D", "9A", "9B", "9C", "9D", "10A", "10B", "10C", "10D", "J1", "J2"]
 
-# Landing Page
+# Landing page
 @views.route("/")
 def lander():
     return render_template("lander.html", user=current_user)
 
-# Download iOS Profile
+# Download iOS profile
 @views.route("/ios")
 def ios():
     return send_file("./static/AcePlan.mobileconfig", as_attachment=True)
@@ -26,7 +26,7 @@ def ios():
 def android():
     return send_file("./static/AcePlan.apk", as_attachment=True)
 
-# Home / Substitution Plan
+# Home / Substitution plan
 @views.route("/home", methods=["GET", "POST"])
 @login_required
 def home():
@@ -35,13 +35,13 @@ def home():
     else:
         date = datetime.today().strftime('%Y-%m-%d')
 
-    # Get Substitution Data
+    # Get substitution data
     url = "https://hektor.webuntis.com/WebUntis/monitor/substitution/data?school=KurfuerstFGym"
     payload = {"formatName":"Vertr_Lehrer_heute","schoolName":"KurfuerstFGym","date":date.replace("-", ""),"dateOffset":0,"strikethrough":True,"mergeBlocks":True,"showOnlyFutureSub":False,"showBreakSupervisions":False,"showTeacher":True,"showClass":True,"showHour":True,"showInfo":True,"showRoom":True,"showSubject":True,"groupBy":2,"hideAbsent":True,"departmentIds":[3,2,1,4],"departmentElementType":1,"hideCancelWithSubstitution":False,"hideCancelCausedByEvent":False,"showTime":False,"showSubstText":True,"showAbsentElements":[4,1,2],"showAffectedElements":[],"showUnitTime":False,"showMessages":True,"showStudentgroup":False,"enableSubstitutionFrom":False,"showSubstitutionFrom":0,"showTeacherOnEvent":False,"showAbsentTeacher":True,"strikethroughAbsentTeacher":True,"activityTypeIds":[2,3,4],"showEvent":False,"showCancel":True,"showOnlyCancel":False,"showSubstTypeColor":False,"showExamSupervision":False,"showUnheraldedExams":False}
     response = requests.post(url, json=payload).text
     data_dict = json.loads(response)
 
-    # Last Update
+    # Last update
     last_update = data_dict["payload"]["lastUpdate"]
 
     # Date for data
@@ -49,10 +49,10 @@ def home():
     data_date = str(data_date)[:4] + "-" + str(data_date)[4:]
     data_date = str(data_date)[:7] + "-" + str(data_date)[7:]
 
-    # Week Day
+    # Week day
     week_day = data_dict["payload"]["weekDay"]
 
-    # General Info
+    # General info
     messages_raw = data_dict["payload"]["messageData"]["messages"]
     messages_cleaned = []
     for message in messages_raw:
@@ -94,15 +94,29 @@ def home():
             else:
                 cleaned_row.append(row_text)
 
-            # Entfall
+            # Canceled / Change
             if "1" in row["cellClasses"]:
                 cleaned_row.append("CANCELED")
             else:
                 cleaned_row.append("CHANGE")
+
+            # Room change
+            if "(" in html.unescape(row["data"][3]):
+                cleaned_row.append("CHANGE")
+            else:
+                cleaned_row.append("NOCHANGE")
+
+            # Teacher change
+            if "(" in html.unescape(row["data"][4]):
+                cleaned_row.append("CHANGE")
+            else:
+                cleaned_row.append("NOCHANGE")
+
+            # Append if not duplicate
             if cleaned_row not in unsorted_changes:
                 unsorted_changes.append(cleaned_row)
 
-    # Sort Changes List
+    # Sort changes list
     changes = []
     len_unsortet_changes = len(unsorted_changes)
     first_hour = 999
