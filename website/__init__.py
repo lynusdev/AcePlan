@@ -5,14 +5,13 @@ from flask_login import LoginManager
 
 db = SQLAlchemy()
 
+# Create Flask App
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     basedir = path.abspath(path.dirname(__file__))
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///' + path.join(basedir, "database.db")
     db.init_app(app)
-
-
 
     from .views import views
     from .auth import auth
@@ -37,6 +36,7 @@ def create_app():
 
     return app
 
+# Create Database
 def create_database(app):
     if not path.exists('website/database.db'):
         db.create_all(app=app)

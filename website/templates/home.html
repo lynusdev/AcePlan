@@ -41,7 +41,7 @@ navigation %}
     </div>
   </form>
   <div class="is-size-7 has-text-grey-light has-text-centered mb-5">
-    Last Update: {{ last_update }}
+    Last Change: {{ last_update }}
   </div>
   {% if messages %}
   <article class="message is-link">
@@ -55,54 +55,65 @@ navigation %}
       {% endfor %}
     </div>
   </article>
-  {% endif %} {% if changes %} {% for change in changes %} {% if change[6] ==
-  "CANCELED" %}
-  <div class="box has-background-danger">
-    {% elif change[6] == "CHANGE" %}
-    <div class="box has-background-warning">
-      {% endif %}
-      <div class="columns is-mobile is-vcentered">
-        <div
-          class="column is-one-quarter has-text-centered p-1"
-          style="height: 100%"
-        >
-          <div class="notification has-background-white px-2 title is-4">
-            {{ change[0] }}
+  {% endif %}
+  {% if changes %}
+  {% for change in changes %}
+  {% if change[6] == "CANCELED" %}
+  <div class="box has-background-danger p-4" style="border-radius: 10px">
+  {% elif change[6] == "CHANGE" %}
+  <div class="box has-background-warning p-4" style="border-radius: 10px">
+  {% endif %}
+        <div class="columns is-mobile is-variable is-2">
+          <div class="column is-3">
+            <div
+              class="notification has-background-white is-flex is-justify-content-center is-align-items-center p-0 has-text-weight-bold"
+              style="
+                height: 100%;
+                border-radius: 10px;
+                font-size: 8vw;
+                white-space: nowrap;
+              "
+            >
+              {{ change[0] }}
+            </div>
           </div>
-        </div>
-        <div class="column">
-          <div class="columns is-multiline is-mobile">
-            <div class="column is-one-third has-text-centered p-1">
-              <div
-                class="notification has-background-white px-2 has-text-weight-bold"
-              >
-                {{ change[1] }}
+          <div class="column is-9">
+            <div
+              class="notification has-background-white has-text-centered mb-4 p-1"
+              style="border-radius: 10px"
+            >
+              <div class="columns is-mobile is-gapless">
+                <div
+                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center"
+                  style="font-size: 5vw;"
+                >
+                  {{ change[1] }}
+                </div>
+                <div
+                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center"
+                  style="font-size: 5vw;"
+                >
+                  {{ change[2] }}
+                </div>
+                <div
+                  class="column has-text-weight-bold is-flex is-justify-content-center is-align-items-center"
+                  style="font-size: 5vw;"
+                >
+                  {{ change[3] }}
+                </div>
               </div>
             </div>
-            <div class="column is-one-third has-text-centered p-1">
-              <div
-                class="notification has-background-white px-2 has-text-weight-bold"
-              >
-                {{ change[2] }}
-              </div>
-            </div>
-            <div class="column is-one-third has-text-centered p-1">
-              <div
-                class="notification has-background-white px-2 has-text-weight-bold"
-              >
-                {{ change[3] }}
-              </div>
-            </div>
-            <div class="column is-full has-text-centered p-1">
-              <div class="notification has-background-white px-2">
-                {{ change[4] }}{% if not change[4] == "" and not change[5] ==
-                ""%} | {% endif %}{{ change[5] }}
-              </div>
+            <div
+              class="notification has-background-white has-text-centered mt-4 p-2"
+              style="border-radius: 10px; word-wrap: break-word"
+            >
+              {{ change[4] }}{% if not change[4] == "" and not change[5] == ""%}
+              | {% endif %}{{ change[5] }}
             </div>
           </div>
         </div>
       </div>
+      {% endfor %} {% endif %} {% endblock %}
     </div>
-    {% endfor %} {% endif %} {% endblock %}
   </div>
 </div>
