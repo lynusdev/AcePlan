@@ -142,8 +142,13 @@ def settings():
     if request.method == 'POST':
         flash('Your settings have been saved!', category='success')
         klasse = request.form.get('klasse')
+        showgeneralinfo = request.form.get('showgeneralinfo')
         user = User.query.filter_by(id=current_user.id).first()
         user.klasse = klasse
+        if showgeneralinfo == "on":
+            user.showinfo = True
+        else:
+            user.showinfo = False
         db.session.commit()
         
     return render_template("settings.html", user=current_user, alle_klassen=alle_klassen)

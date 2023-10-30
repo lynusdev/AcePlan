@@ -59,6 +59,15 @@ navigation %}
           </div>
         </div>
       </div>
+      <div class="field">
+        <div class="control">
+          <label class="label">Customization</label>
+          <label class="checkbox">
+            <input type="checkbox" name="showgeneralinfo" {% if user.showinfo == True %}checked{% endif %}>
+            Show General Info
+          </label>
+        </div>
+      </div>
       <div class="control has-text-centered mt-4">
         <button class="button is-primary is-info" type="submit">Confirm</button>
       </div>

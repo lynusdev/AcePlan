@@ -43,7 +43,7 @@ navigation %}
   <div class="is-size-7 has-text-grey-light has-text-centered mb-5">
     Last Change: {{ last_update }}
   </div>
-  {% if messages %}
+  {% if user.showinfo == True and messages %}
   <article class="message is-link">
     <div class="message-header">
       <p>General Info</p>
