@@ -69,19 +69,31 @@ def home():
 
             # Hour
             row_hour = html.unescape(row["data"][0].replace(' ', ""))
-            cleaned_row.append(row_hour)
+            if row_hour == "":
+                cleaned_row.append("-")
+            else:
+                cleaned_row.append(row_hour)
 
             # Subject
             row_subject = html.unescape(row["data"][2])
-            cleaned_row.append(row_subject)
+            if row_subject == "":
+                cleaned_row.append("-")
+            else:
+                cleaned_row.append(row_subject)
 
             # Room
             row_room = html.unescape(row["data"][3].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', ""))
-            cleaned_row.append(row_room)
+            if row_room == "":
+                cleaned_row.append("-")
+            else:
+                cleaned_row.append(row_room)
 
             # Teacher
             row_teacher = html.unescape(row["data"][4].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', ""))
-            cleaned_row.append(row_teacher)
+            if row_teacher == "":
+                cleaned_row.append("-")
+            else:
+                cleaned_row.append(row_teacher)
 
             # Info
             row_info = html.unescape(row["data"][5])
@@ -90,7 +102,7 @@ def home():
             # Text
             row_text = html.unescape(row["data"][6])
             if row_info == "" and row_text == "":
-                cleaned_row.append("---")
+                cleaned_row.append("-")
             else:
                 cleaned_row.append(row_text)
 
