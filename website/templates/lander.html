@@ -6,18 +6,27 @@ content %}
 </p>
 <div class="box has-text-centered my-6 mx-6 p-4">
   <p class="title is-4 has-text-centered">Download</p>
-  <button class="button is-dark mr-1" onclick="window.location.href='ios';">
-    <span class="icon">
-      <i class="fa-brands fa-apple"></i>
-    </span>
-    <span>iOS</span>
-  </button>
-  <button class="button is-dark ml-1" onclick="window.location.href='android';">
-    <span class="icon">
-      <i class="fa-brands fa-android"></i>
-    </span>
-    <span>Android</span>
-  </button>
+  <div class="columns is-gapless is-mobile">
+    <div class="column">
+      <button class="button is-dark mr-1" onclick="window.location.href='ios';">
+        <span class="icon">
+          <i class="fa-brands fa-apple"></i>
+        </span>
+        <span>iOS</span>
+      </button>
+    </div>
+    <div class="column">
+      <button
+        class="button is-dark ml-1"
+        onclick="window.location.href='android';"
+      >
+        <span class="icon">
+          <i class="fa-brands fa-android"></i>
+        </span>
+        <span>Android</span>
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="box mx-4 has-text-centered has-text-weight-medium">

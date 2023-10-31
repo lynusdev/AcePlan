@@ -15,7 +15,6 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('Successfully signed in!', category='success')
                 login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
@@ -29,7 +28,6 @@ def login():
 @auth.route("/logout")
 @login_required
 def logout():
-    flash('Successfully signed out!', category='success')
     logout_user()
     return redirect(url_for('auth.login'))
 
@@ -61,7 +59,6 @@ def signup():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
-            flash('Successfully signed up!', category='success')
             return redirect(url_for('views.home'))
 
     return render_template("signup.html", user=current_user)
