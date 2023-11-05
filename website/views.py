@@ -68,30 +68,30 @@ def home():
             cleaned_row = []
 
             # Hour
-            row_hour = html.unescape(row["data"][0].replace(' ', "")).replace('---', "-")
+            row_hour = html.unescape(row["data"][0].replace(' ', ""))
             if row_hour == "":
-                cleaned_row.append("-")
+                cleaned_row.append("---")
             else:
                 cleaned_row.append(row_hour)
 
             # Subject
-            row_subject = html.unescape(row["data"][2]).replace('---', "-")
+            row_subject = html.unescape(row["data"][2])
             if row_subject == "":
-                cleaned_row.append("-")
+                cleaned_row.append("---")
             else:
                 cleaned_row.append(row_subject)
 
             # Room
-            row_room = html.unescape(row["data"][3].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', "")).replace('---', "-")
+            row_room = html.unescape(row["data"][3].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', ""))
             if row_room == "":
-                cleaned_row.append("-")
+                cleaned_row.append("---")
             else:
                 cleaned_row.append(row_room)
 
             # Teacher
-            row_teacher = html.unescape(row["data"][4].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', "")).replace('---', "-")
+            row_teacher = html.unescape(row["data"][4].split(" (")[0].replace('<span class="substMonitorSubstElem">', "").replace('</span>', ""))
             if row_teacher == "":
-                cleaned_row.append("-")
+                cleaned_row.append("---")
             else:
                 cleaned_row.append(row_teacher)
 
@@ -102,7 +102,7 @@ def home():
             # Text
             row_text = html.unescape(row["data"][6])
             if row_info == "" and row_text == "":
-                cleaned_row.append("-")
+                cleaned_row.append("---")
             else:
                 cleaned_row.append(row_text)
 
